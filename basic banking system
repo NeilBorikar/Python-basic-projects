@@ -1,0 +1,99 @@
+import random
+n=str(input("a=create account\nw=withdraw money\nd=deposit money\nc=check balance\n"))
+if n=='a':
+    class bank:
+        def __init__(self):
+            self.name= None
+            self.adhar=None
+            self.pan=None
+            self.accountno=None
+        def input(self):
+            self.name=str(input("enter your name:"))
+            self.adhar=int(input("enter your adharno:"))
+            self.pan=input("enter your pancard no:")
+        def account(self):
+            #for i in range(0,10,1):
+                self.accountno=''.join(str(random.randint(0,9))for _ in range(10))
+               # print(num,end='')
+                return self.accountno
+        def display(self):
+            print(f"Name:{self.name}")
+            print(f"account no:{self.accountno}")
+            print(f"adhar no:{self.adhar}")
+            print("pan no:",self.pan)
+    s1=bank()
+    s1.input()
+    s1.account()
+    s1.display()
+if n=='c' :
+    class balance:
+        def __init__(self,balance,accno):
+            self.balance=balance
+            self.accountno=accno
+            #print(f"account no:{self.accountno}")
+            #print("balance:",self.balance)
+    s1=balance(40000000,1708242529)
+    s2=balance(1234567,2529071106)
+    s3=balance(456789,2911250707)
+    accounts = [s1,s2,s3]
+    s=int(input("enter your account no:"))
+    flag=0
+    for account in accounts:
+        if s==account.accountno:
+            print(f"account no:{account.accountno}\nbalance:{account.balance}")
+            flag=1
+            break
+    if flag==0:
+        print("account not found")
+if n=='w':
+    class balance:
+        def __init__(self,balance,accno):
+            self.balance=balance
+            self.accountno=accno
+    class withdraw(balance):
+        def __init__(self,balance,accno):
+            super().__init__(balance,accno)
+        def withdraw(self,amount):
+            if amount<=self.balance:
+                self.balance=self.balance - amount
+                print("withdrawal successful\nremaining balance:",self.balance)
+            else:
+                print("insufficient balance")
+    accounts =[withdraw(40000000,1708242529),
+               withdraw(12345676,2529071106),
+               withdraw(45678932,2911250707)]
+    s=int(input("enter your account no:"))
+    flag=0
+    for account in accounts:
+        if s==account.accountno:
+            amount=int(input("enter amount to withdraw:"))
+            account.withdraw(amount)
+            flag=1
+            break
+    if flag==0:
+        print("account not found")
+if n== 'd':
+    class balance:
+        def __init__(self,balance,accno):
+            self.balance=balance
+            self.accountno=accno
+    class deposit(balance):
+        def __init__(self,balance,accno):
+            super().__init__(balance,accno)
+        def deposition(self,amount):
+            self.balance=self.balance + amount
+            print("amount has been successfuly deposited\nupdated balance:",self.balance)
+    accounts = [deposit(40000000,1708242529),
+                deposit(12345676,2529071106),
+                deposit(45678932,2911250707)]
+    s=int(input("enter your account no:"))
+    flag=0
+    for account in accounts:
+        if s==account.accountno:
+            amount=int(input("enter amount to deposit:"))
+            account.deposition(amount)
+            flag=1
+            break
+    if flag==0:
+        print("account not found")
+                    
