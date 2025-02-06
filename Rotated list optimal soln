@@ -1,0 +1,24 @@
+    m=[]
+    n=int(input("enter length of list:"))
+    for i in range(0,n,1):
+        m.append(int(input("enter rotated list:")))
+    def rotatedlistb(m,n):
+        lb=0
+        ub=n-1
+        if not m:
+            return 0
+        if m[0]==m[-1]:#here -1 is used to acces the last element instead of n-1 if we want to acccess 2nd last element we can use -2
+            return 0
+        while lb<=ub:
+            mid=(lb + ub)//2
+            if m[mid]>m[mid+1]:
+                return mid
+            elif m[mid]<m[mid-1]:
+                return mid
+            elif m[mid]>m[n-1]:
+                ub=ub-1
+            else:#m[mid]<m[n-1]
+                lb=lb+1
+        return 0
+    rotations=rotatedlistb(m,n)
+    print("no of times list rotated is=",rotations)
