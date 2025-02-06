@@ -1,0 +1,87 @@
+class User:
+    def __init__(self,username,name,email):
+        self.username=username
+        self.name=name
+        self.email=email
+    def __repr__(self):
+        return f"user(username:'{self.username}' , name:'{self.name} , email:{self.email}')"
+class UserDatabase:
+    def __init__(self):
+        self.users=[]
+    def insert(self,user):
+        i=0
+        while i<len(self.users):
+            if self.users[i].username>user.username:
+                break
+            i=i+1
+        self.users.insert(i,user)
+    def find(self,username):
+        for user in self.users:
+            if user.username==username:
+                return user
+        return None
+    def update(self, old_username, new_username, name, email):
+        user = self.find(old_username)
+        if not user:
+            print("User not found.")
+            return
+        
+        if old_username != new_username and self.find(new_username):
+            print("New username is already taken. Please try a different one.")
+            return
+
+        self.users.remove(user)
+
+        user.username = new_username
+        user.name = name
+        user.email = email
+
+        self.insert(user)
+
+    def listall(self):
+        if not self.users:
+            return("no users found")
+        return "\n".join([f"\nusername:'{user.username}\n'Name:'{user.name}\n'Email:'{user.email}'"for user in self.users])
+            
+        
+if __name__=="__main__":
+    db=UserDatabase()
+    
+    db.insert(User("_neil_b_27","Neil","neilborikar25@gmail.com"))
+    db.insert(User("_abhiram_59236","Abhiram","abhiram.nair241@vit.edu"))
+    db.insert(User("virat.kohli","Virat Kohli","viratkohli18@gmail.com"))
+    db.insert(User("chaoswithsann","Sanskruti","sanskrutijadhav101@gmail.com"))
+n=str(input("to check all users press: a\nto update user press: u\nto insert new user press:i\nto find an user press:f\n")).lower()
+if n=='i':    
+    username=input("enter username:")
+    name=str(input("enter name:"))
+    email=input("enter email:")
+    db.insert(User(username,name,email))
+    print("updated list\n")
+    print(db.listall())
+elif n=='f':
+    f=input("enter username to find:")
+    found=db.find(f)
+    if found:
+        print (f"username:'{found.username}',Name:{found.name},email:{found.email}")
+    else:
+        print("invalid username")
+
+elif n =='u':
+        old_username = input("Enter the current username of the user: ")
+        user_to_update = db.find(old_username)
+        if user_to_update:
+            new_username = input("Enter the new username if you wish to update: ")
+            name = input("Enter new name: ")
+            email = input("Enter new email: ")
+            db.update(old_username, new_username, name, email)
+            print("Updated list of all users:")
+            print(db.listall())
+        else:
+            print("Invalid username. User not found.")
+elif n=='a':
+    print("list:\n")
+    print(db.listall())
+else:
+    print("invalid choice")
+
